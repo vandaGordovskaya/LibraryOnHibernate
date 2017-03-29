@@ -7,9 +7,9 @@
     <title>create book form</title>
 </head>
 <body>
-<a href = "../books"> <<< Back  </a>
+<a href = "./books"> <<< Back  </a>
 <br/>
-<form method="POST" action="createBook.jsp">
+<form method="POST" action="./createBook">
     <br/>
     Book ID: <input type="number" name="bookId" style="width: 200px" required maxlength="5"/><br/>
     <br/>

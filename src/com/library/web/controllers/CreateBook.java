@@ -25,12 +25,15 @@ public class CreateBook extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             BookDao bookDao = DaoFactory.getInstance().getBookDao();
+
             AuthorDao authorDao = DaoFactory.getInstance().getAuthorDao();
             List<Author> authors = authorDao.listAuthors();
             req.setAttribute("listAuthorsFromDB", authors);
+
             int id = Integer.parseInt(req.getParameter("bookId"));
             String bookName = req.getParameter("bookName");
             String[] getAuthors = req.getParameterValues("getListAuthors");
+
             List<Author> addedAuthors = new ArrayList<Author>();
             Book newBook = new Book();
             newBook.setName(bookName);
@@ -55,8 +58,8 @@ public class CreateBook extends HttpServlet {
             e.printStackTrace();
         }
 
-        getServletContext().getRequestDispatcher("./jsp/createBook.jsp").forward(req, resp);
-        //resp.sendRedirect("./books");
+        getServletContext().getRequestDispatcher("/jsp/createBook.jsp").forward(req, resp);
+        resp.sendRedirect("./books");
     }
 
     @Override

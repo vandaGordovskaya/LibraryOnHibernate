@@ -29,7 +29,7 @@
     </table>
     <br/>
         <br/>
-            <form method="LINK" action="/library/jsp/createBook.jsp">
+            <form method="LINK" action="/library/createBook">
                 <input type="submit" value="CREATE BOOK">
             </form>
 </div>
