@@ -41,6 +41,15 @@ public class CreateBook extends HttpServlet {
 
 
             for(Author findAuthor : authors) {
+                for(String gettedAuth : getAuthors) {
+                    if(gettedAuth.equals(findAuthor.getName())) {
+                        Author newAuthor = new Author();
+                        newAuthor.setId(findAuthor.getId());
+                        newAuthor.setName(findAuthor.getName());
+                        addedAuthors.add(newAuthor);
+                    }
+                }
+                /*
                 String name = findAuthor.getName();
                 for(int i = 0; i < getAuthors.length; i++) {
                     if(name.equals(getAuthors[i])) {
@@ -49,7 +58,7 @@ public class CreateBook extends HttpServlet {
                         newAuthor.setName(findAuthor.getName());
                         addedAuthors.add(newAuthor);
                     }
-                }
+                }*/
             }
             bookDao.addBook(newBook, addedAuthors);
         } catch (SQLException e) {
