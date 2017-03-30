@@ -39,9 +39,10 @@ public class DeleteAuthor extends HttpServlet {
                         List<Author> bookAuthors = bookDao.getAuthorsByBook(libraryBook.getId());
                         if(bookAuthors.size()> 1){
                             authorDao.removeAuthor(id);
+                            resp.sendRedirect("./authors");
                         } else {
                             req.setAttribute("errorMsg", "This author cannot be deleted because it single author for one of the book!");
-                            getServletContext().getRequestDispatcher("/authors.jsp").forward(req, resp);
+                            getServletContext().getRequestDispatcher("./authors").forward(req, resp);
                         }
                     }
                 }

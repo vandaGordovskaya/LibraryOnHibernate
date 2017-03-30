@@ -10,7 +10,7 @@
 <a href = "./jsp/welcomePage.jsp"> <<< Back  </a>
 <br/>
 <br/>
-<div style="color:red">${errorMsg}</div>
+
 <div align="center">
 <h1>AUTHORS LIST</h1>
     <table border="1" cellpadding="5">
