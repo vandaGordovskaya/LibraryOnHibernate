@@ -10,6 +10,7 @@
 <a href = "./jsp/welcomePage.jsp"> <<< Back  </a>
 <br/>
 <br/>
+<div style="color:red">${errorMsg}</div>
 <div align="center">
 <h1>AUTHORS LIST</h1>
     <table border="1" cellpadding="5">
@@ -23,7 +24,7 @@
                 <td><c:out value="${author.id}" /></td>
                 <td><a target="_self" href="/library/authorData?authorId=${author.id}&authorName=${author.name}">
                     <c:out value="${author.name}" /></a></td>
-                <td><a href = "delete?id=&{author.id}">Delete this author</a></td>
+                <td><a href = "./deleteAuthor?authorId=&{author.id}">Delete this author</a></td>
             </tr>
         </c:forEach>
     </table>

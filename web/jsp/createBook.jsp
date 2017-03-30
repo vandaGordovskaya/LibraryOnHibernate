@@ -17,11 +17,12 @@
     <br/>
     Author(s):
 
-      <p><select multiple name="getListAuthors" size="5" required>
+      <p><select name="getListAuthors" size="5" multiple required>
         <c:forEach var="author" items="${listAuthorsFromDB}">
-        <option value="<c:out value="${author.id}" />"><c:out value="${author.name}" /></option>
+        <option value="<c:out value="${author.name}" />"><c:out value="${author.name}" /></option>
         </c:forEach>
       </select></p>
+
 
     <input type="submit" value="CREATE" />
 </form>

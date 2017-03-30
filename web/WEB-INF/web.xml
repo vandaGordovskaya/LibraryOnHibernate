@@ -76,4 +76,13 @@
         <servlet-name>deleteBook</servlet-name>
         <url-pattern>/deleteBook</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>deleteAuthor</servlet-name>
+        <servlet-class>com.library.web.controllers.DeleteAuthor</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>deleteAuthor</servlet-name>
+        <url-pattern>/deleteAuthor</url-pattern>
+    </servlet-mapping>
 </web-app>

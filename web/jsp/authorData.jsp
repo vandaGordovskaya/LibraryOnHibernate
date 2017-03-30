@@ -15,7 +15,7 @@
 <br/>
 <table border="1" cellpadding="5">
   <tr>
-    <th width="120">Author(s)</th>
+    <th width="120">Book(s)</th>
   </tr>
   <c:forEach var="book" items="${listBooks}">
   <tr>
