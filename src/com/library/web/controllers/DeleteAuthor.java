@@ -31,18 +31,20 @@ public class DeleteAuthor extends HttpServlet {
             List<Book> authorBooks = authorDao.getBooksByAuthor(id);
             Iterator<Book> iteratorBooks = books.iterator();
             Iterator<Book> iteratorAuthBooks = authorBooks.iterator();
+            //authorDao.removeAuthor(id);
             while(iteratorAuthBooks.hasNext()) {
+                Book authBook = iteratorAuthBooks.next();
                 while(iteratorBooks.hasNext()) {
-                    Book authBook = iteratorAuthBooks.next();
                     Book libraryBook = iteratorBooks.next();
                     if(authBook.getName().equals(libraryBook.getName())) {
                         List<Author> bookAuthors = bookDao.getAuthorsByBook(libraryBook.getId());
-                        if(bookAuthors.size()> 1){
+                        if(bookAuthors.size() > 1){
                             authorDao.removeAuthor(id);
-                            resp.sendRedirect("./authors");
+                            req.setAttribute("errorMsg", "Author is deleted successfully!");
+                            getServletContext().getRequestDispatcher("/jsp/authors.jsp").forward(req, resp);
                         } else {
                             req.setAttribute("errorMsg", "This author cannot be deleted because it single author for one of the book!");
-                            getServletContext().getRequestDispatcher("./authors").forward(req, resp);
+                            getServletContext().getRequestDispatcher("/jsp/authors.jsp").forward(req, resp);
                         }
                     }
                 }
@@ -51,8 +53,8 @@ public class DeleteAuthor extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        //getServletContext().getRequestDispatcher("/jsp/books.jsp").forward(req, resp);
-        resp.sendRedirect("./authors");
+        //getServletContext().getRequestDispatcher("/jsp/authors.jsp").forward(req, resp);
+        //resp.sendRedirect("./authors");
     }
 
     @Override
