@@ -23,10 +23,10 @@ public class DeleteBook extends HttpServlet {
         int id = Integer.parseInt(idTemp);
         try {
             bookDao.removeBook(id);
+            req.setAttribute("errorMsg", "Author is deleted successfully!");
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        //getServletContext().getRequestDispatcher("/jsp/books.jsp").forward(req, resp);
         resp.sendRedirect("./books");
     }
 

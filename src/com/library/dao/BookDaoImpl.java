@@ -61,13 +61,14 @@ public class BookDaoImpl implements BookDao {
         try {
             connection = ConnectionFactory.getConnection();
             stmt = connection.createStatement();
-            rs = stmt.executeQuery("SELECT AUTHORS.NAME FROM AUTHORS "
+            rs = stmt.executeQuery("SELECT AUTHORS.NAME, AUTHORS.ID FROM AUTHORS "
                     + "LEFT JOIN BOOK_AUTH ON AUTHORS.ID=BOOK_AUTH.AUTH_ID "
                     + "LEFT JOIN BOOKS ON BOOK_AUTH.BOOK_ID=BOOKS.ID "
                     + "WHERE BOOKS.ID=" + id + " ORDER BY AUTHORS.NAME;");
             while (rs.next()) {
                 Author authors = new Author();
                 authors.setName(rs.getString(1));
+                authors.setName(rs.getString(2));
 
                 bookAuth.add(authors);
             }
@@ -114,7 +115,6 @@ public class BookDaoImpl implements BookDao {
 
     public void removeBook(int id) throws SQLException{
         Statement stmt = null;
-
         try {
             connection = ConnectionFactory.getConnection();
             stmt = connection.createStatement();
@@ -129,15 +129,46 @@ public class BookDaoImpl implements BookDao {
         }
     }
 
-    public void updateBook(int id, Book book) throws SQLException {
-        PreparedStatement stmt = null;
+    public void removeAuthorsFromBook(Book book, List<Author> authors) throws SQLException {
+        Statement stmt = null;
+        String REMOVE_AUTHOR = "DELETE FROM BOOK_AUTH WHERE BOOK_ID=? AND AUTH_ID=?";
+        try {
+            connection = ConnectionFactory.getConnection();
+            stmt = connection.createStatement();
+            for(Author author : authors) {
+                PreparedStatement pstmt = connection.prepareStatement(REMOVE_AUTHOR);
+                pstmt.setInt(1, book.getId());
+                pstmt.setInt(2, author.getId());
+                pstmt.executeUpdate();
+            }
+        } finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(stmt != null) {
+                stmt.close();
+            }
+        }
+    }
+
+    public void updateBook(Book book, List<Author> authors) throws SQLException {
+        Statement stmt = null;
+        String UPDATE_BOOK = "UPDATE BOOKS SET NAME=? WHERE ID=?";
+        String ASSOCIATE_AUTHORS = "INSERT INTO BOOK_AUTH(BOOK_ID, AUTH_ID) VALUES (?, ?)";
+
         try{
             connection = ConnectionFactory.getConnection();
-            stmt = connection.prepareStatement("UPDATE BOOKS SET "
-                    + "ID=?, NAME=? "
-                    + "WHERE ID=" + id);
-            stmt.setInt(1, book.getId());
-            stmt.setString(2, book.getName());
+            stmt = connection.createStatement();
+            PreparedStatement pstmt = connection.prepareStatement(UPDATE_BOOK);
+            pstmt.setString(1, book.getName());
+            pstmt.setInt(2, book.getId());
+            pstmt.executeUpdate();
+            for(Author author : authors) {
+                pstmt = connection.prepareStatement(ASSOCIATE_AUTHORS);
+                pstmt.setInt(1, book.getId());
+                pstmt.setInt(2, author.getId());
+                pstmt.executeUpdate();
+            }
         } finally {
             if(connection != null) {
                 connection.close();

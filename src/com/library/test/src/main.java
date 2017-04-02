@@ -12,7 +12,12 @@ import java.util.List;
 
 class main {
     public static void main(String[] args) throws SQLException {
-        AuthorDaoImpl authorDao = new AuthorDaoImpl();
-        authorDao.removeAuthor(16);
+        Book book = new Book();
+        book.setId(3);
+        book.setName("updatedBookViaTest");
+        BookDaoImpl bookDao = new BookDaoImpl();
+        //bookDao.updateBook(book);
+        //AuthorDaoImpl authorDao = new AuthorDaoImpl();
+       //authorDao.removeAuthor(16);
     }
 }

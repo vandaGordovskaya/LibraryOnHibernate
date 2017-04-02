@@ -23,15 +23,5 @@
   </tr>
   </c:forEach>
 </table>
-
-<form method="post" action="edit">
-    <br/>
-    Book Title: <input type="text" name="bookName" /><c:out value="${bookName}" /><br/>
-    <br/>
-    Book Context: <input type="text" name="bookContext" /><br/>
-    <br/>
-    <input type="submit" value="EDIT" />
-</form>
-
 </body>
 </html>

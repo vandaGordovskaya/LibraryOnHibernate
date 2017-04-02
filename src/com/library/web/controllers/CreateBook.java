@@ -49,16 +49,6 @@ public class CreateBook extends HttpServlet {
                         addedAuthors.add(newAuthor);
                     }
                 }
-                /*
-                String name = findAuthor.getName();
-                for(int i = 0; i < getAuthors.length; i++) {
-                    if(name.equals(getAuthors[i])) {
-                        Author newAuthor = new Author();
-                        newAuthor.setId(findAuthor.getId());
-                        newAuthor.setName(findAuthor.getName());
-                        addedAuthors.add(newAuthor);
-                    }
-                }*/
             }
             bookDao.addBook(newBook, addedAuthors);
         } catch (SQLException e) {
@@ -68,7 +58,7 @@ public class CreateBook extends HttpServlet {
         }
 
         getServletContext().getRequestDispatcher("/jsp/createBook.jsp").forward(req, resp);
-        resp.sendRedirect("./books");
+        //resp.sendRedirect("./books");
     }
 
     @Override

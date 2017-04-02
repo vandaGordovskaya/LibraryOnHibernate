@@ -1,9 +1,7 @@
 package com.library.web.controllers;
 
-import com.library.dao.AuthorDao;
 import com.library.dao.BookDao;
 import com.library.dao.DaoFactory;
-import com.library.model.Author;
 import com.library.model.Book;
 
 import javax.servlet.ServletException;
@@ -21,9 +19,6 @@ public class Books extends HttpServlet {
             BookDao bookDao = DaoFactory.getInstance().getBookDao();
             List<Book> books = bookDao.listBooks();
             req.setAttribute("listBooks", books);
-            AuthorDao authorDao = DaoFactory.getInstance().getAuthorDao();
-            List<Author> authors = authorDao.listAuthors();
-            req.getServletContext().setAttribute("listAuthors", authors);
             getServletContext().getRequestDispatcher("/jsp/books.jsp").forward(req, resp);
         } catch (SQLException e) {
             e.printStackTrace();
