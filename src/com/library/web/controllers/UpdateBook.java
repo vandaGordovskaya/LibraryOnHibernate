@@ -49,18 +49,19 @@ public class UpdateBook extends HttpServlet {
             req.setAttribute("notAssociatedAuthors", notAssociatedAuthors);
 
             //validation Book must have at least one Author
-            String[] associateAuth = req.getParameterValues("associateAuthors");
             String[] removeAuth = req.getParameterValues("disassociateAuthors");
-            if((associateAuth.equals(null)) && (removeAuth.length == bookAuthors.size())) {
+            String[] associateAuth = req.getParameterValues("associateAuthors");
+            if((associateAuth[0].isEmpty()) && (removeAuth.length == bookAuthors.size())) {
                 req.setAttribute("errorMsg", "Book must have at least one Author!");
                 getServletContext().getRequestDispatcher("/jsp/updateBook.jsp").forward(req, resp);
             } else {
+
                 //updating book with association Authors
-                List<Author> addedAuthors = new ArrayList<>();
-                if (!associateAuth.equals(null)) {
+                if (!associateAuth[0].isEmpty()) {
+                    List<Author> addedAuthors = new ArrayList<>();
                     for (Author findAuthor : notAssociatedAuthors) {
-                        for (String gettedAuth : associateAuth) {
-                            if (gettedAuth.equals(findAuthor.getName())) {
+                        for (int i = 0; i < associateAuth.length; i++) {
+                            if (associateAuth[i].equals(findAuthor.getName())) {
                                 Author newAuthor = new Author();
                                 newAuthor.setId(findAuthor.getId());
                                 newAuthor.setName(findAuthor.getName());
@@ -72,12 +73,11 @@ public class UpdateBook extends HttpServlet {
                 }
 
                 //remove Authors from the book
-
-                List<Author> deleteAuthors = new ArrayList<Author>();
-                if (!removeAuth.equals(null)) {
+                if (!removeAuth[0].isEmpty()) {
+                    List<Author> deleteAuthors = new ArrayList<Author>();
                     for (Author findAuthor : bookAuthors) {
-                        for (String gettedAuth : removeAuth) {
-                            if (gettedAuth.equals(findAuthor.getName())) {
+                        for (int i = 0; i < removeAuth.length; i++) {
+                            if (removeAuth[i].equals(findAuthor.getName())) {
                                 Author newAuthor = new Author();
                                 newAuthor.setId(findAuthor.getId());
                                 newAuthor.setName(findAuthor.getName());
@@ -89,6 +89,7 @@ public class UpdateBook extends HttpServlet {
                 }
                 getServletContext().getRequestDispatcher("/jsp/updateBook.jsp").forward(req, resp);
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (Exception e) {
