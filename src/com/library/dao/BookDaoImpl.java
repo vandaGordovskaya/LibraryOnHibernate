@@ -131,12 +131,13 @@ public class BookDaoImpl implements BookDao {
 
     public void removeAuthorsFromBook(Book book, List<Author> authors) throws SQLException {
         Statement stmt = null;
+        connection = ConnectionFactory.getConnection();
+        stmt = connection.createStatement();
+        PreparedStatement pstmt = null;
         String REMOVE_AUTHOR = "DELETE FROM BOOK_AUTH WHERE BOOK_ID=? AND AUTH_ID=?";
         try {
-            connection = ConnectionFactory.getConnection();
-            stmt = connection.createStatement();
             for(Author author : authors) {
-                PreparedStatement pstmt = connection.prepareStatement(REMOVE_AUTHOR);
+                pstmt = connection.prepareStatement(REMOVE_AUTHOR);
                 pstmt.setInt(1, book.getId());
                 pstmt.setInt(2, author.getId());
                 pstmt.executeUpdate();
@@ -151,11 +152,9 @@ public class BookDaoImpl implements BookDao {
         }
     }
 
-    public void updateBook(Book book, List<Author> authors) throws SQLException {
+    public void updateBook(Book book) throws SQLException {
         Statement stmt = null;
         String UPDATE_BOOK = "UPDATE BOOKS SET NAME=? WHERE ID=?";
-        String ASSOCIATE_AUTHORS = "INSERT INTO BOOK_AUTH(BOOK_ID, AUTH_ID) VALUES (?, ?)";
-
         try{
             connection = ConnectionFactory.getConnection();
             stmt = connection.createStatement();
@@ -163,6 +162,24 @@ public class BookDaoImpl implements BookDao {
             pstmt.setString(1, book.getName());
             pstmt.setInt(2, book.getId());
             pstmt.executeUpdate();
+        } finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(stmt != null) {
+                stmt.close();
+            }
+        }
+    }
+
+    @Override
+    public void associateAuthToBook(Book book, List<Author> authors) throws SQLException {
+        Statement stmt = null;
+        String ASSOCIATE_AUTHORS = "INSERT INTO BOOK_AUTH(BOOK_ID, AUTH_ID) VALUES (?, ?)";
+        connection = ConnectionFactory.getConnection();
+        stmt = connection.createStatement();
+        PreparedStatement pstmt = null;
+        try {
             for(Author author : authors) {
                 pstmt = connection.prepareStatement(ASSOCIATE_AUTHORS);
                 pstmt.setInt(1, book.getId());

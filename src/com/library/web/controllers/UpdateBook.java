@@ -35,9 +35,11 @@ public class UpdateBook extends HttpServlet {
             AuthorDao authorDao = DaoFactory.getInstance().getAuthorDao();
             List<Author> authors = authorDao.listAuthors();
 
+            //update book
             Book updatedBook = new Book();
             updatedBook.setId(id);
             updatedBook.setName(updatedName);
+            bookDao.updateBook(updatedBook);
 
             //get associated Authors
             List<Author> bookAuthors = bookDao.getAuthorsByBook(id);
@@ -67,17 +69,17 @@ public class UpdateBook extends HttpServlet {
                     bookDao.removeAuthorsFromBook(updatedBook, deleteAuthors);
                 }
 
-                //updating book with association Authors
+                //associate Authors with the book
                 if (!associateAuth[0].isEmpty()) {
                     List<Author> addedAuthors = new ArrayList<>();
-                        for (int i = 0; i < associateAuth.length; i++) {
-                                Author newAuthor = new Author();
-                                newAuthor.setId(Integer.parseInt(associateAuth[i]));
-                                addedAuthors.add(newAuthor);
-                            }
-                    bookDao.updateBook(updatedBook, addedAuthors);
+                    for (int i = 0; i < associateAuth.length; i++) {
+                        Author newAuthor = new Author();
+                        newAuthor.setId(Integer.parseInt(associateAuth[i]));
+                        addedAuthors.add(newAuthor);
+                    }
+                    bookDao.associateAuthToBook(updatedBook, addedAuthors);
                 }
-           }
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
