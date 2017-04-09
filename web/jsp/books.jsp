@@ -17,24 +17,30 @@
        <tr>
             <th width="80">ID</th>
             <th width="120">Title</th>
-            <th width="100">Delete</th>
-            <th width="100">Edit</th>
+            <c:if test="${userRole eq 'admin'}">
+                <th width="100">Delete</th>
+                <th width="100">Edit</th>
+            </c:if>
        </tr>
        <c:forEach var="book" items="${listBooks}">
          <tr>
             <td><c:out value="${book.id}" /></td>
             <td><a target="_self" href="/library/bookData?bookId=${book.id}&bookName=${book.name}">
                 <c:out value="${book.name}" /></a></td>
-            <td><a href = "./deleteBook?bookId=${book.id}">Delete this book</a></td>
-            <td><a href = "./updateBook?bookId=${book.id}&bookName=${book.name}">Edit this book</a></td>
+            <c:if test="${userRole eq 'admin'}">
+                <td><a href = "./deleteBook?bookId=${book.id}">Delete this book</a></td>
+                <td><a href = "./updateBook?bookId=${book.id}&bookName=${book.name}">Edit this book</a></td>
+            </c:if>
           </tr>
        </c:forEach>
     </table>
     <br/>
         <br/>
+        <c:if test="${userRole eq 'admin'}">
             <form method="LINK" action="/library/createBook">
                 <input type="submit" value="CREATE BOOK">
             </form>
+        </c:if>
 </div>
 </body>
 </html>

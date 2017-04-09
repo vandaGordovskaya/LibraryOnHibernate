@@ -120,14 +120,17 @@ public class AuthorDaoImpl implements AuthorDao {
         }
     }
 
-    public void updateAuthor(int id, Author author) throws SQLException {
-        PreparedStatement stmt = null;
+    public void updateAuthor(Author author) throws SQLException {
+        Statement stmt = null;
         try{
-            stmt = connection.prepareStatement("UPDATE AUTHORS SET "
-                    + "ID=?, NAME=? "
+            connection = ConnectionFactory.getConnection();
+            stmt = connection.createStatement();
+            int id = author.getId();
+            PreparedStatement pstmt = connection.prepareStatement("UPDATE AUTHORS SET "
+                    + "NAME=? "
                     + "WHERE ID=" + id);
-            stmt.setInt(1, author.getId());
-            stmt.setString(2, author.getName());
+            pstmt.setString(1, author.getName());
+            pstmt.executeUpdate();
         } finally {
             if(connection != null) {
                 connection.close();

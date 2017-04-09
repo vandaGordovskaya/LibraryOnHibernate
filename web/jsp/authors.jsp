@@ -17,22 +17,30 @@
         <tr>
             <th width="80">ID</th>
             <th width="120">Name</th>
-            <th width="100">Delete</th>
+                <c:if test="${userRole eq 'admin'}">
+                    <th width="100">Delete</th>
+                    <th width="100">Edit</th>
+                </c:if>
         </tr>
         <c:forEach var="author" items="${listAuthors}">
             <tr>
                 <td><c:out value="${author.id}" /></td>
                 <td><a target="_self" href="/library/authorData?authorId=${author.id}&authorName=${author.name}">
                     <c:out value="${author.name}" /></a></td>
-                <td><a href = "/library/deleteAuthor?authorId=<c:out value="${author.id}" />">Delete this author</a></td>
+                <c:if test="${userRole eq 'admin'}">
+                    <td><a href = "/library/deleteAuthor?authorId=<c:out value="${author.id}" />">Delete this author</a></td>
+                    <td><a href = "./updateAuthor?authorId=${author.id}&authorName=${author.name}">Edit this author</a></td>
+                </c:if>
             </tr>
         </c:forEach>
     </table>
     <br/>
     <br/>
-        <form method="LINK" action="/library/jsp/createAuthor.jsp">
-            <input type="submit" value="CREATE AUTHOR">
-        </form>
+        <c:if test="${userRole eq 'admin'}">
+            <form method="LINK" action="/library/jsp/createAuthor.jsp">
+                <input type="submit" value="CREATE AUTHOR">
+            </form>
+        </c:if>
 </div>
 </body>
 </html>

@@ -6,4 +6,5 @@ import java.sql.SQLException;
 
 public interface UserDao {
     public boolean checkAdminRole(User user) throws SQLException;
+    public boolean checkUserExist(User user) throws SQLException;
 }

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface AuthorDao {
     public void addAuthor(Author author) throws SQLException;
-    public void updateAuthor(int id, Author author) throws SQLException;
+    public void updateAuthor(Author author) throws SQLException;
     public void removeAuthor(int id) throws SQLException;
     public Author getAuthorById(int id) throws SQLException;
     public List<Author> listAuthors() throws SQLException;

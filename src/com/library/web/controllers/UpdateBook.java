@@ -56,45 +56,36 @@ public class UpdateBook extends HttpServlet {
                 getServletContext().getRequestDispatcher("/jsp/updateBook.jsp").forward(req, resp);
             } else {
 
-                //updating book with association Authors
-                if (!associateAuth[0].isEmpty()) {
-                    List<Author> addedAuthors = new ArrayList<>();
-                    for (Author findAuthor : notAssociatedAuthors) {
-                        for (int i = 0; i < associateAuth.length; i++) {
-                            if (associateAuth[i].equals(findAuthor.getName())) {
-                                Author newAuthor = new Author();
-                                newAuthor.setId(findAuthor.getId());
-                                newAuthor.setName(findAuthor.getName());
-                                addedAuthors.add(newAuthor);
-                            }
-                        }
-                    }
-                    bookDao.updateBook(updatedBook, addedAuthors);
-                }
-
                 //remove Authors from the book
                 if (!removeAuth[0].isEmpty()) {
-                    List<Author> deleteAuthors = new ArrayList<Author>();
-                    for (Author findAuthor : bookAuthors) {
-                        for (int i = 0; i < removeAuth.length; i++) {
-                            if (removeAuth[i].equals(findAuthor.getName())) {
-                                Author newAuthor = new Author();
-                                newAuthor.setId(findAuthor.getId());
-                                newAuthor.setName(findAuthor.getName());
-                                deleteAuthors.add(newAuthor);
-                            }
-                        }
+                    List<Author> deleteAuthors = new ArrayList<>();
+                    for (int i = 0; i < removeAuth.length; i++) {
+                        Author newAuthor = new Author();
+                        newAuthor.setId(Integer.parseInt(removeAuth[i]));
+                        deleteAuthors.add(newAuthor);
                     }
                     bookDao.removeAuthorsFromBook(updatedBook, deleteAuthors);
                 }
-                getServletContext().getRequestDispatcher("/jsp/updateBook.jsp").forward(req, resp);
-            }
+
+                //updating book with association Authors
+                if (!associateAuth[0].isEmpty()) {
+                    List<Author> addedAuthors = new ArrayList<>();
+                        for (int i = 0; i < associateAuth.length; i++) {
+                                Author newAuthor = new Author();
+                                newAuthor.setId(Integer.parseInt(associateAuth[i]));
+                                addedAuthors.add(newAuthor);
+                            }
+                    bookDao.updateBook(updatedBook, addedAuthors);
+                }
+           }
 
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        getServletContext().getRequestDispatcher("/jsp/updateBook.jsp").forward(req, resp);
+
     }
 
     @Override

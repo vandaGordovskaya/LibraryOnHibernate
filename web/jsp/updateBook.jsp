@@ -18,15 +18,15 @@
     <br/>
     Associated Authors (select author(s) to disassociate):
      <p><select name="disassociateAuthors" size="3" multiple>
-            <c:forEach var="author" items="${associatedAuthors}">
-            <option value="<c:out value="${author.name}" />"><c:out value="${author.name}" /></option>
+            <c:forEach var="associatedAuthor" items="${associatedAuthors}">
+            <option value="<c:out value="${associatedAuthor.id}" />"><c:out value="${associatedAuthor.name}" /></option>
             </c:forEach>
           </select></p>
      <br/>
      Not associated Authors (select author(s) to associate):
           <p><select name="associateAuthors" size="3" multiple>
                  <c:forEach var="newAuthor" items="${notAssociatedAuthors}">
-                 <option value="<c:out value="${newAuthor.name}" />"><c:out value="${newAuthor.name}" /></option>
+                 <option value="<c:out value="${newAuthor.id}" />"><c:out value="${newAuthor.name}" /></option>
                  </c:forEach>
                </select></p>
     <input type="submit" value="UPDATE" />

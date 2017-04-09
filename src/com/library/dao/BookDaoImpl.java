@@ -68,7 +68,7 @@ public class BookDaoImpl implements BookDao {
             while (rs.next()) {
                 Author authors = new Author();
                 authors.setName(rs.getString(1));
-                authors.setName(rs.getString(2));
+                authors.setId(rs.getInt(2));
 
                 bookAuth.add(authors);
             }
