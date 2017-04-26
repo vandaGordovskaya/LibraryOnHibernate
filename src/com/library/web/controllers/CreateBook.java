@@ -23,22 +23,31 @@ import java.util.List;
 public class CreateBook extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        AuthorDao authorDao = DaoFactory.getInstance().getAuthorDao();
         try {
-            BookDao bookDao = DaoFactory.getInstance().getBookDao();
-
-            AuthorDao authorDao = DaoFactory.getInstance().getAuthorDao();
             List<Author> authors = authorDao.listAuthors();
             req.setAttribute("listAuthorsFromDB", authors);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        getServletContext().getRequestDispatcher("/jsp/createBook.jsp").forward(req, resp);
+    }
 
-            int id = Integer.parseInt(req.getParameter("bookId"));
-            String bookName = req.getParameter("bookName");
-            String[] getAuthors = req.getParameterValues("getListAuthors");
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        BookDao bookDao = DaoFactory.getInstance().getBookDao();
+        AuthorDao authorDao = DaoFactory.getInstance().getAuthorDao();
+        int id = Integer.parseInt(req.getParameter("bookId"));
+        String bookName = req.getParameter("bookName");
+        String[] getAuthors = req.getParameterValues("getListAuthors");
+
+        try {
+            List<Author> authors = authorDao.listAuthors();
 
             List<Author> addedAuthors = new ArrayList<Author>();
             Book newBook = new Book();
             newBook.setName(bookName);
             newBook.setId(id);
-
 
             for(Author findAuthor : authors) {
                 for(String gettedAuth : getAuthors) {
@@ -53,16 +62,7 @@ public class CreateBook extends HttpServlet {
             bookDao.addBook(newBook, addedAuthors);
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-
-        getServletContext().getRequestDispatcher("/jsp/createBook.jsp").forward(req, resp);
-        //resp.sendRedirect("./books");
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doGet(req, resp);
+        resp.sendRedirect("./books");
     }
 }

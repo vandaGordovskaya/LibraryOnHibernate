@@ -29,12 +29,7 @@ public class AuthorData extends HttpServlet {
         }
     }
 
-    public void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-        try {
-            doGet(req, resp);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doGet(req, resp);
     }
 }

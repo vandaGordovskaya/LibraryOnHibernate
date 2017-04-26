@@ -41,6 +41,25 @@ public class UpdateAuthor extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doGet(req, resp);
+        AuthorDao authorDao = DaoFactory.getInstance().getAuthorDao();
+
+        String idTemp = req.getParameter("authorId");
+        String updatedName = req.getParameter("updatedAuthorName");
+        String authorName = req.getParameter("authorName");
+        int id = Integer.parseInt(idTemp);
+        req.setAttribute("authorName", authorName);
+        req.setAttribute("authorId", id);
+
+        Author updatedAuthor = new Author();
+        updatedAuthor.setId(id);
+        updatedAuthor.setName(updatedName);
+        try {
+            authorDao.updateAuthor(updatedAuthor);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        resp.sendRedirect("./authors");
     }
 }

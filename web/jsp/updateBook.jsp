@@ -8,7 +8,7 @@
 <body>
 <a href = "./books"> <<< Back  </a>
 <br/>
-<div style="color:red">${errorMsg}</div>
+<div style="color:red"><c:out value="${requestScope.errorMsg}" /></div>
 <br/>
 <form method="POST" action="./updateBook">
     <br/>
@@ -24,11 +24,12 @@
           </select></p>
      <br/>
      Not associated Authors (select author(s) to associate):
-          <p><select name="associateAuthors" size="3" multiple><
+          <p><select name="associateAuthors" size="3" multiple>
                  <c:forEach var="newAuthor" items="${notAssociatedAuthors}">
                  <option value="<c:out value="${newAuthor.id}" />"><c:out value="${newAuthor.name}" /></option>
                  </c:forEach>
                </select></p>
+
     <input type="submit" value="UPDATE" />
 </form>
 </body>

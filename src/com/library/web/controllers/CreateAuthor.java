@@ -17,6 +17,11 @@ import java.sql.SQLException;
 public class CreateAuthor extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doPost(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         AuthorDao authorDao = DaoFactory.getInstance().getAuthorDao();
         int id = Integer.parseInt(req.getParameter("authorId"));
         String authorName = req.getParameter("authorName");
@@ -30,12 +35,6 @@ public class CreateAuthor extends HttpServlet {
             e.printStackTrace();
         }
 
-        getServletContext().getRequestDispatcher("/jsp/createAuthor.jsp").forward(req, resp);
-        resp.sendRedirect("/library/authors");
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doGet(req, resp);
+        resp.sendRedirect("./authors");
     }
 }

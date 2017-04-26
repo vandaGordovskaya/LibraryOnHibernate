@@ -17,21 +17,20 @@ public class DeleteBook extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doPost(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         BookDao bookDao = DaoFactory.getInstance().getBookDao();
 
         String idTemp = req.getParameter("bookId");
         int id = Integer.parseInt(idTemp);
         try {
             bookDao.removeBook(id);
-            req.setAttribute("errorMsg", "Author is deleted successfully!");
         } catch (SQLException e) {
             e.printStackTrace();
         }
         resp.sendRedirect("./books");
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doGet(req, resp);
     }
 }

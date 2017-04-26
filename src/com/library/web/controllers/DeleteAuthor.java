@@ -21,6 +21,7 @@ import java.util.List;
 public class DeleteAuthor extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //doPost(req, resp);
         AuthorDao authorDao = DaoFactory.getInstance().getAuthorDao();
         BookDao bookDao = DaoFactory.getInstance().getBookDao();
 
@@ -40,8 +41,7 @@ public class DeleteAuthor extends HttpServlet {
                         List<Author> bookAuthors = bookDao.getAuthorsByBook(libraryBook.getId());
                         if(bookAuthors.size() > 1){
                             authorDao.removeAuthor(id);
-                            req.setAttribute("errorMsg", "Author is deleted successfully!");
-                            getServletContext().getRequestDispatcher("/jsp/authors.jsp").forward(req, resp);
+                            resp.sendRedirect("./authors");
                         } else {
                             req.setAttribute("errorMsg", "This author cannot be deleted because it single author for one of the book!");
                             getServletContext().getRequestDispatcher("/jsp/authors.jsp").forward(req, resp);
@@ -53,8 +53,6 @@ public class DeleteAuthor extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        //getServletContext().getRequestDispatcher("/jsp/authors.jsp").forward(req, resp);
-        //resp.sendRedirect("./authors");
     }
 
     @Override

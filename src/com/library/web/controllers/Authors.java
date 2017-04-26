@@ -19,6 +19,9 @@ public class Authors extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
+            HttpSession session = req.getSession();
+            String userRole = (String)session.getAttribute("userRole");
+            req.setAttribute("userRole", userRole);
             AuthorDao authorDao = DaoFactory.getInstance().getAuthorDao();
             List<Author> authors = authorDao.listAuthors();
             req.getServletContext().setAttribute("listAuthors", authors);

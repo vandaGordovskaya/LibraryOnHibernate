@@ -23,9 +23,11 @@ public class LoginServlet extends HttpServlet {
         try {
             if(userDao.checkUserExist(user)) {
                     if(userDao.checkAdminRole(user)) {
-                        req.getServletContext().setAttribute("userRole", "admin");
+                        HttpSession session = req.getSession();
+                        session.setAttribute("userRole", "admin");
                     } else {
-                        req.getServletContext().setAttribute("userRole", "read");
+                        HttpSession session = req.getSession();
+                        session.setAttribute("userRole", "read");
                     }
                     getServletContext().getRequestDispatcher("/jsp/welcomePage.jsp").forward(req, resp);
             } else {

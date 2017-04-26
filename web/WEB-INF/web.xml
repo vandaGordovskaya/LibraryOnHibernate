@@ -78,6 +78,15 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>deleteAuthor</servlet-name>
+        <servlet-class>com.library.web.controllers.DeleteAuthor</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>deleteAuthor</servlet-name>
+        <url-pattern>/deleteAuthor</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>updateBook</servlet-name>
         <servlet-class>com.library.web.controllers.UpdateBook</servlet-class>
     </servlet>

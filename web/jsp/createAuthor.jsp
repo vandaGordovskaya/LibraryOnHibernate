@@ -5,7 +5,7 @@
     <title>create book form</title>
 </head>
 <body>
-<a href = "./authors"> <<< Back  </a>
+<a href = "../authors"> <<< Back  </a>
 <br/>
 <form method="post" action="../createAuthor">
     <br/>
