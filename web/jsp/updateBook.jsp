@@ -10,7 +10,8 @@
 <br/>
 <div style="color:red"><c:out value="${requestScope.errorMsg}" /></div>
 <br/>
-<form method="POST" action="./updateBook">
+<form method="POST" action="books" name="updateBook">
+<input type="hidden" name="action" value="updateBook" />
     <br/>
     Book ID: <input type="number" name="bookId" style="width: 200px" value="<c:out value="${bookId}" />" readonly="readonly" /><br/>
     <br/>

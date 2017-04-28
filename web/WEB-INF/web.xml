@@ -15,24 +15,6 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>bookData</servlet-name>
-        <servlet-class>com.library.web.controllers.BookData</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>bookData</servlet-name>
-        <url-pattern>/bookData</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>authorData</servlet-name>
-        <servlet-class>com.library.web.controllers.AuthorData</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>authorData</servlet-name>
-        <url-pattern>/authorData</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
     <servlet-name>books</servlet-name>
     <servlet-class>com.library.web.controllers.Books</servlet-class>
     </servlet>
@@ -42,65 +24,11 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>createBook</servlet-name>
-        <servlet-class>com.library.web.controllers.CreateBook</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>createBook</servlet-name>
-        <url-pattern>/createBook</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
         <servlet-name>authors</servlet-name>
         <servlet-class>com.library.web.controllers.Authors</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>authors</servlet-name>
         <url-pattern>/authors</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>createAuthor</servlet-name>
-        <servlet-class>com.library.web.controllers.CreateAuthor</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>createAuthor</servlet-name>
-        <url-pattern>/createAuthor</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>deleteBook</servlet-name>
-        <servlet-class>com.library.web.controllers.DeleteBook</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>deleteBook</servlet-name>
-        <url-pattern>/deleteBook</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>deleteAuthor</servlet-name>
-        <servlet-class>com.library.web.controllers.DeleteAuthor</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>deleteAuthor</servlet-name>
-        <url-pattern>/deleteAuthor</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>updateBook</servlet-name>
-        <servlet-class>com.library.web.controllers.UpdateBook</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>updateBook</servlet-name>
-        <url-pattern>/updateBook</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>updateAuthor</servlet-name>
-        <servlet-class>com.library.web.controllers.UpdateAuthor</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>updateAuthor</servlet-name>
-        <url-pattern>/updateAuthor</url-pattern>
     </servlet-mapping>
 </web-app>

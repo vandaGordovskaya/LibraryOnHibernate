@@ -7,7 +7,8 @@
 <body>
 <a href = "../authors"> <<< Back  </a>
 <br/>
-<form method="post" action="../createAuthor">
+<form method="post" action="authors" name="createAuthor">
+<input type="hidden" name="action" value="createAuthor" />
     <br/>
     Author ID: <input type="number" name="authorId" style="width: 200px" required maxlength="5"/><br/>
     <br/>

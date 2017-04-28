@@ -10,7 +10,8 @@
 <br/>
 <div style="color:red">${errorMsg}</div>
 <br/>
-<form method="POST" action="./updateAuthor">
+<form method="POST" action="authors" name="updateAuthor">
+<input type="hidden" name="action" value="updateAuthor" />
     <br/>
     Author ID: <input type="number" name="authorId" style="width: 200px" value="<c:out value="${authorId}" />" readonly="readonly" /><br/>
     <br/>

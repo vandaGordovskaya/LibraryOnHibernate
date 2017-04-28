@@ -25,11 +25,11 @@
         <c:forEach var="author" items="${listAuthors}">
             <tr>
                 <td><c:out value="${author.id}" /></td>
-                <td><a target="_self" href="/library/authorData?authorId=${author.id}&authorName=${author.name}">
+                <td><a target="_self" href="authors?action=authorData&authorId=${author.id}&authorName=${author.name}">
                     <c:out value="${author.name}" /></a></td>
                 <c:if test="${userRole eq 'admin'}">
-                    <td><a href = "/library/deleteAuthor?authorId=<c:out value="${author.id}" />">Delete this author</a></td>
-                    <td><a href = "./updateAuthor?authorId=${author.id}&authorName=${author.name}">Edit this author</a></td>
+                    <td><a href = "authors?action=deleteAuthor&authorId=${author.id}">Delete this author</a></td>
+                    <td><a href = "authors?action=updateAuthor&authorId=${author.id}&authorName=${author.name}">Edit this author</a></td>
                 </c:if>
             </tr>
         </c:forEach>
@@ -37,9 +37,7 @@
     <br/>
     <br/>
         <c:if test="${userRole eq 'admin'}">
-            <form method="LINK" action="/library/jsp/createAuthor.jsp">
-                <input type="submit" value="CREATE AUTHOR">
-            </form>
+            <a href = "authors?action=createAuthor">CREATE NEW AUTHOR</a>
         </c:if>
 </div>
 </body>

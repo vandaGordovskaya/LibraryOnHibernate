@@ -25,11 +25,11 @@
        <c:forEach var="book" items="${listBooks}">
          <tr>
             <td><c:out value="${book.id}" /></td>
-            <td><a target="_self" href="/library/bookData?bookId=${book.id}&bookName=${book.name}">
+            <td><a target="_self" href="books?action=bookData&bookId=${book.id}&bookName=${book.name}">
                 <c:out value="${book.name}" /></a></td>
             <c:if test="${userRole eq 'admin'}">
-                <td><a href = "./deleteBook?bookId=${book.id}">Delete this book</a></td>
-                <td><a href = "./updateBook?bookId=${book.id}&bookName=${book.name}">Edit this book</a></td>
+                <td><a href = "books?action=deleteBook&bookId=${book.id}">Delete this book</a></td>
+                <td><a href = "books?action=updateBook&bookId=${book.id}&bookName=${book.name}">Edit this book</a></td>
             </c:if>
           </tr>
        </c:forEach>
@@ -37,9 +37,7 @@
     <br/>
         <br/>
         <c:if test="${userRole eq 'admin'}">
-            <form method="LINK" action="/library/createBook">
-                <input type="submit" value="CREATE BOOK">
-            </form>
+            <a href = "books?action=createBook">CREATE NEW BOOK</a>
         </c:if>
 </div>
 </body>
