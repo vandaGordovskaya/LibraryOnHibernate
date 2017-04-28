@@ -54,9 +54,6 @@ public class Books extends HttpServlet {
 
     private void listBooks(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            HttpSession session = req.getSession();
-            String userRole = (String)session.getAttribute("userRole");
-            req.setAttribute("userRole", userRole);
             bookDao = DaoFactory.getInstance().getBookDao();
             List<Book> books = bookDao.listBooks();
             req.setAttribute("listBooks", books);

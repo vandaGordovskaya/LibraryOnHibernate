@@ -54,9 +54,6 @@ public class Authors extends HttpServlet {
 
     private void listAuthors(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            HttpSession session = req.getSession();
-            String userRole = (String)session.getAttribute("userRole");
-            req.setAttribute("userRole", userRole);
             authorDao = DaoFactory.getInstance().getAuthorDao();
             List<Author> authors = authorDao.listAuthors();
             req.getServletContext().setAttribute("listAuthors", authors);

@@ -17,7 +17,7 @@
         <tr>
             <th width="80">ID</th>
             <th width="120">Name</th>
-                <c:if test="${userRole eq 'admin'}">
+                <c:if test="${sessionScope.userRole eq 'admin'}">
                     <th width="100">Delete</th>
                     <th width="100">Edit</th>
                 </c:if>
@@ -27,7 +27,7 @@
                 <td><c:out value="${author.id}" /></td>
                 <td><a target="_self" href="authors?action=authorData&authorId=${author.id}&authorName=${author.name}">
                     <c:out value="${author.name}" /></a></td>
-                <c:if test="${userRole eq 'admin'}">
+                <c:if test="${sessionScope.userRole eq 'admin'}">
                     <td><a href = "authors?action=deleteAuthor&authorId=${author.id}">Delete this author</a></td>
                     <td><a href = "authors?action=updateAuthor&authorId=${author.id}&authorName=${author.name}">Edit this author</a></td>
                 </c:if>
