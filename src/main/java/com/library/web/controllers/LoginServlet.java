@@ -1,8 +1,8 @@
-package com.library.web.controllers;
+package main.java.com.library.web.controllers;
 
-import com.library.dao.DaoFactory;
-import com.library.dao.UserDao;
-import com.library.model.User;
+import main.java.com.library.dao.DaoFactory;
+import main.java.com.library.dao.UserDao;
+import main.java.com.library.model.User;
 
 import java.io.*;
 import java.sql.SQLException;
@@ -18,7 +18,7 @@ public class LoginServlet extends HttpServlet {
         UserDao userDao = DaoFactory.getInstance().getUserDao();
         User user = new User();
         user.setName(userName);
-        user.setPassword(pass);
+        user.setPass(pass);
 
         try {
             if(userDao.checkUserExist(user)) {
@@ -34,7 +34,7 @@ public class LoginServlet extends HttpServlet {
                 req.setAttribute("errorMsg", "This User is not authorized: " + userName);
                 getServletContext().getRequestDispatcher("/index.jsp").forward(req, resp);
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

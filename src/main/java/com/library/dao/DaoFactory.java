@@ -1,4 +1,4 @@
-package com.library.dao;
+package main.java.com.library.dao;
 
 public class DaoFactory {
     private static DaoFactory instance = new DaoFactory();

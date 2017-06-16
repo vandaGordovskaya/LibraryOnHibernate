@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="main.java.com.library.model">
+
+    <class name="User" table="USERS">
+        <id name="id" column="ID" type="java.lang.Integer">
+            <generator class="increment"/>
+        </id>
+        <property column="NAME" name="name" type="java.lang.String"/>
+        <property column="PASS" name="pass" type="java.lang.String"/>
+        <property column="ROLE" name="role" type="java.lang.String"/>
+    </class>
+
+</hibernate-mapping>

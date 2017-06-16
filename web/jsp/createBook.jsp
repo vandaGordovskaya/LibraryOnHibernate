@@ -10,9 +10,6 @@
 <br/>
 <form method="POST" action="books" name="createBook">
 <input type="hidden" name="action" value="createBook" />
-    <br/>
-    Book ID: <input type="number" name="bookId" style="width: 200px" required maxlength="5"/><br/>
-    <br/>
     Book Name: <input type="text" name="bookName" style="width: 200px" required maxlength="250"/><br/>
     <br/>
     Author(s):

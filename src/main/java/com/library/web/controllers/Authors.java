@@ -1,8 +1,8 @@
-package com.library.web.controllers;
+package main.java.com.library.web.controllers;
 
-import com.library.dao.*;
-import com.library.model.Author;
-import com.library.model.Book;
+import main.java.com.library.dao.*;
+import main.java.com.library.model.Author;
+import main.java.com.library.model.Book;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 public class Authors extends HttpServlet {
     private BookDao bookDao;
@@ -55,7 +56,7 @@ public class Authors extends HttpServlet {
     private void listAuthors(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             authorDao = DaoFactory.getInstance().getAuthorDao();
-            List<Author> authors = authorDao.listAuthors();
+            Set<Author> authors = authorDao.listAuthors();
             req.getServletContext().setAttribute("listAuthors", authors);
             getServletContext().getRequestDispatcher("/jsp/authors.jsp").forward(req, resp);
         } catch (SQLException e) {
@@ -73,15 +74,13 @@ public class Authors extends HttpServlet {
 
     private void createAuthor(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         authorDao = DaoFactory.getInstance().getAuthorDao();
-        int id = Integer.parseInt(req.getParameter("authorId"));
         String authorName = req.getParameter("authorName");
 
-        Author newAuthor = new Author();
-        newAuthor.setName(authorName);
-        newAuthor.setId(id);
+        Author newAuthor = new Author(authorName);
+
         try {
             authorDao.addAuthor(newAuthor);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -102,7 +101,7 @@ public class Authors extends HttpServlet {
         updatedAuthor.setId(id);
         updatedAuthor.setName(updatedName);
         try {
-            authorDao.updateAuthor(updatedAuthor);
+            authorDao.updateAuthor(id, updatedAuthor);
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (Exception e) {
@@ -125,7 +124,7 @@ public class Authors extends HttpServlet {
         updatedAuthor.setId(id);
         updatedAuthor.setName(updatedName);
         try {
-            authorDao.updateAuthor(updatedAuthor);
+            authorDao.updateAuthor(id, updatedAuthor);
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (Exception e) {
@@ -141,17 +140,16 @@ public class Authors extends HttpServlet {
         String idTemp = req.getParameter("authorId");
         int id = Integer.parseInt(idTemp);
         try {
-            List<Book> books = bookDao.listBooks();
-            List<Book> authorBooks = authorDao.getBooksByAuthor(id);
+            Set<Book> books = bookDao.listBooks();
+            Set<Book> authorBooks = authorDao.getBooksByAuthor(id);
             Iterator<Book> iteratorBooks = books.iterator();
             Iterator<Book> iteratorAuthBooks = authorBooks.iterator();
-            //authorDao.removeAuthor(id);
             while(iteratorAuthBooks.hasNext()) {
                 Book authBook = iteratorAuthBooks.next();
                 while(iteratorBooks.hasNext()) {
                     Book libraryBook = iteratorBooks.next();
                     if(authBook.getName().equals(libraryBook.getName())) {
-                        List<Author> bookAuthors = bookDao.getAuthorsByBook(libraryBook.getId());
+                        Set<Author> bookAuthors = bookDao.getAuthorsByBook(libraryBook.getId());
                         if(bookAuthors.size() > 1){
                             authorDao.removeAuthor(id);
                             resp.sendRedirect("./authors");
@@ -163,7 +161,7 @@ public class Authors extends HttpServlet {
                 }
             }
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -173,7 +171,7 @@ public class Authors extends HttpServlet {
             authorDao = DaoFactory.getInstance().getAuthorDao();
             int id = Integer.parseInt(req.getParameter("authorId"));
             String authorName = req.getParameter("authorName");
-            List<Book> listBooks = authorDao.getBooksByAuthor(id);
+            Set<Book> listBooks = authorDao.getBooksByAuthor(id);
             req.setAttribute("listBooks", listBooks);
             req.setAttribute("authorName", authorName);
 

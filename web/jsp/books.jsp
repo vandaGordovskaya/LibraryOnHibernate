@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
+<body background-color:#9F79EE>
 <a href = "./jsp/welcomePage.jsp"> <<< Back  </a>
 <br/>
 <div style="color:red">${errorMsg}</div>

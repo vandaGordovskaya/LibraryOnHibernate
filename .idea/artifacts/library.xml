@@ -11,6 +11,10 @@
             <element id="library" level="project" name="taglibs:standard:1.1.2" />
             <element id="library" level="project" name="javax.servlet:jstl:1.2" />
             <element id="library" level="project" name="h2-1.4.193" />
+            <element id="library" level="project" name="org-apache-commons-logging" />
+            <element id="library" level="project" name="cglib-2.2.2" />
+            <element id="library" level="project" name="org.objectweb.asm-3.2.0" />
+            <element id="library" level="project" name="javax.transaction" />
           </element>
         </element>
         <element id="dir-copy" path="$PROJECT_DIR$/web" />

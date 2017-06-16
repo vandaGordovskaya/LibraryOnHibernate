@@ -1,8 +1,8 @@
-package com.library.web.controllers;
+package main.java.com.library.web.controllers;
 
-import com.library.dao.*;
-import com.library.model.Author;
-import com.library.model.Book;
+import main.java.com.library.dao.*;
+import main.java.com.library.model.Author;
+import main.java.com.library.model.Book;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,7 +12,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Books extends HttpServlet {
     private BookDao bookDao;
@@ -55,7 +57,7 @@ public class Books extends HttpServlet {
     private void listBooks(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             bookDao = DaoFactory.getInstance().getBookDao();
-            List<Book> books = bookDao.listBooks();
+            Set<Book> books = bookDao.listBooks();
             req.setAttribute("listBooks", books);
             getServletContext().getRequestDispatcher("/jsp/books.jsp").forward(req, resp);
         } catch (SQLException e) {
@@ -77,24 +79,24 @@ public class Books extends HttpServlet {
         req.setAttribute("bookId", id);
         //get list Authors from the system
 
-        List<Author> authors = null;
+        Set<Author> authors = null;
         try {
             authors = authorDao.listAuthors();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         //get associated Authors
-        List<Author> bookAuthors = null;
+        Set<Author> bookAuthors = null;
         try {
             bookAuthors = bookDao.getAuthorsByBook(id);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         req.setAttribute("associatedAuthors", bookAuthors);
 
         //find Authors which are not associated with the Book
-        List<Author> notAssociatedAuthors = authors;
+        Set<Author> notAssociatedAuthors = authors;
         notAssociatedAuthors.removeAll(bookAuthors);
         req.setAttribute("notAssociatedAuthors", notAssociatedAuthors);
         getServletContext().getRequestDispatcher("/jsp/updateBook.jsp").forward(req, resp);
@@ -116,10 +118,10 @@ public class Books extends HttpServlet {
         req.setAttribute("notAssociatedAuthors", notAssociatedAuthors);
 
         //get associated Authors
-        List<Author> bookAuthors = null;
+        Set<Author> bookAuthors = null;
         try {
             bookAuthors = bookDao.getAuthorsByBook(id);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -157,9 +159,9 @@ public class Books extends HttpServlet {
     private void prepareToCreate(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         AuthorDao authorDao = DaoFactory.getInstance().getAuthorDao();
         try {
-            List<Author> authors = authorDao.listAuthors();
+            Set<Author> authors = authorDao.listAuthors();
             req.setAttribute("listAuthorsFromDB", authors);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         getServletContext().getRequestDispatcher("/jsp/createBook.jsp").forward(req, resp);
@@ -173,9 +175,9 @@ public class Books extends HttpServlet {
         String[] getAuthors = req.getParameterValues("getListAuthors");
 
         try {
-            List<Author> authors = authorDao.listAuthors();
+            Set<Author> authors = authorDao.listAuthors();
 
-            List<Author> addedAuthors = new ArrayList<Author>();
+            Set<Author> addedAuthors = new HashSet<Author>();
             Book newBook = new Book();
             newBook.setName(bookName);
             newBook.setId(id);
@@ -191,7 +193,7 @@ public class Books extends HttpServlet {
                 }
             }
             bookDao.addBook(newBook, addedAuthors);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         resp.sendRedirect("./books");
@@ -204,8 +206,9 @@ public class Books extends HttpServlet {
         String idTemp = req.getParameter("bookId");
         int id = Integer.parseInt(idTemp);
         try {
+            //Book bookToRemove = bookDao.getBookById(id);
             bookDao.removeBook(id);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         resp.sendRedirect("./books");
@@ -216,7 +219,7 @@ public class Books extends HttpServlet {
         int id = Integer.parseInt(req.getParameter("bookId"));
         String bookName = req.getParameter("bookName");
         try {
-            List<Author> authors = bookDao.getAuthorsByBook(id);
+            Set<Author> authors = bookDao.getAuthorsByBook(id);
             req.setAttribute("listAuthors", authors);
             req.setAttribute("bookName", bookName);
 
@@ -233,7 +236,7 @@ public class Books extends HttpServlet {
         updatedBook.setName(name);
         try {
             bookDao.updateBook(updatedBook);
-        } catch (SQLException e1) {
+        } catch (Exception e1) {
             e1.printStackTrace();
         }
         return updatedBook;
@@ -241,7 +244,7 @@ public class Books extends HttpServlet {
 
     private void associateAuthWithBook(Book book, String[] associateAuth) {
         bookDao = DaoFactory.getInstance().getBookDao();
-        List<Author> addedAuthors = new ArrayList<>();
+        Set<Author> addedAuthors = new HashSet<Author>();
         for (int i = 0; i < associateAuth.length; i++) {
             Author newAuthor = new Author();
             newAuthor.setId(Integer.parseInt(associateAuth[i]));
@@ -249,14 +252,14 @@ public class Books extends HttpServlet {
         }
         try {
             bookDao.associateAuthToBook(book, addedAuthors);
-        } catch (SQLException e1) {
+        } catch (Exception e1) {
             e1.printStackTrace();
         }
     }
 
     private void disassociateAuthFromBook(Book book, String[] removeAuth) {
         bookDao = DaoFactory.getInstance().getBookDao();
-        List<Author> deleteAuthors = new ArrayList<>();
+        Set<Author> deleteAuthors = new HashSet<Author>();
         for (int i = 0; i < removeAuth.length; i++) {
             Author newAuthor = new Author();
             newAuthor.setId(Integer.parseInt(removeAuth[i]));
@@ -264,7 +267,7 @@ public class Books extends HttpServlet {
         }
         try {
             bookDao.removeAuthorsFromBook(book, deleteAuthors);
-        } catch (SQLException e1) {
+        } catch (Exception e1) {
             e1.printStackTrace();
         }
     }

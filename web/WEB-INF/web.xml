@@ -4,10 +4,14 @@
 		 http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
     <display-name>MyApp</display-name>
+    <resource-env-ref>
+        <resource-env-ref-name>jdbc/test</resource-env-ref-name>
+        <resource-env-ref-type>javax.sql.DataSource</resource-env-ref-type>
+    </resource-env-ref>
 
     <servlet>
         <servlet-name>loginServlet</servlet-name>
-        <servlet-class>com.library.web.controllers.LoginServlet</servlet-class>
+        <servlet-class>main.java.com.library.web.controllers.LoginServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>loginServlet</servlet-name>
@@ -16,7 +20,7 @@
 
     <servlet>
     <servlet-name>books</servlet-name>
-    <servlet-class>com.library.web.controllers.Books</servlet-class>
+    <servlet-class>main.java.com.library.web.controllers.Books</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>books</servlet-name>
@@ -25,10 +29,15 @@
 
     <servlet>
         <servlet-name>authors</servlet-name>
-        <servlet-class>com.library.web.controllers.Authors</servlet-class>
+        <servlet-class>main.java.com.library.web.controllers.Authors</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>authors</servlet-name>
         <url-pattern>/authors</url-pattern>
     </servlet-mapping>
+
+    <listener>
+        <listener-class>main.java.com.library.dao.HibernateListener</listener-class>
+    </listener>
+
 </web-app>

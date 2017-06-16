@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="main.java.com.library.model">
+
+    <class name="Book" table="BOOKS">
+        <id name="id" column="ID">
+            <generator class="increment"/>
+        </id>
+        <property name="Name" column="NAME"/>
+
+        <set name="authors" table="BOOK_AUTH" fetch="select" cascade="save-update" lazy="false">
+            <key>
+                <column name="BOOK_ID" not-null="true"/>
+            </key>
+            <many-to-many entity-name="main.java.com.library.model.Author">
+                <column name="AUTH_ID" not-null="true"/>
+            </many-to-many>
+        </set>
+    </class>
+
+</hibernate-mapping>
